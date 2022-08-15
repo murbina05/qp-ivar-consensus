@@ -24,7 +24,7 @@ MAX_RUNNING = 8
 #  -i    (Required) Sorted bam file,
 # with aligned reads, to trim primers and quality
 
-#  -b    (Required) BED file with 
+#  -b    (Required) BED file with
 # primer sequences and positions
 
 #  -m    Minimum length of read to
@@ -35,7 +35,7 @@ MAX_RUNNING = 8
 
 #  -s    Width of sliding window (Default: 4)
 
-#  -e    Include reads with no primers. 
+#  -e    Include reads with no primers.
 # By default, reads with no primers are excluded
 
 QC_PRIMER_BED = environ["QC_PRIMER_BED"]
@@ -47,11 +47,14 @@ IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 def get_dbs_list():
     folder = QC_PRIMER_BED 
 
+
     # skip human database
     return [basename(f) for f in glob(f'{folder}/*.BA<') if 'human' not in f]
+    
 
 # might need to add envrionment var, passes database
 # however not need due to not using minimap2 :/
+
 def _generate_commands(BAM_file, prefix, out_dir, min_length = 30, min_quality = 20, slideing_window_width = 4):
     """Helper function to generate commands and facilite testing"""
     files = zip_longest(BAM_file)

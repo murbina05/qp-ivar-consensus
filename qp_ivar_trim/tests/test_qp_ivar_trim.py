@@ -59,7 +59,8 @@ class IvarTrimTests(PluginTestCase):
         eof = [(f'{params["out_dir"]}/{f}', 'bam')
                for f in sorted(BAM_file)]
        # for f in sorted(rev_seqs):
-        #    eof.append((f'{params["out_dir"]}/{f}', 'raw_reverse_seqs'))
+        #    eof.append((f'{params["out_dir"]}/{f}',
+        #  'raw_reverse_seqs'))
         self.assertCountEqual(obs[0], ecmds)
         self.assertCountEqual(obs[1], eof)
 
@@ -76,8 +77,10 @@ class IvarTrimTests(PluginTestCase):
         obs = _generate_commands(BAM_file, [], params['database'],
                                  params['nprocs'], params['out_dir'])
         #cmd = COMBINED_CMD_SINGLE.format(**params)
-        #ecmds = [cmd % (f, f) for f in fwd_seqs]
-        #eof = [(f'{params["out_dir"]}/{f}', 'raw_forward_seqs')
+        #ecmds = [cmd % (f, f) for 
+        # f in fwd_seqs]
+        #eof = [(f'{params["out_dir"]}/{f}',
+        #  'raw_forward_seqs')
         #       for f in sorted(fwd_seqs)]
         #self.assertCountEqual(obs[0], ecmds)
         #self.assertCountEqual(obs[1], eof)
@@ -217,9 +220,11 @@ class IvarTrimTests(PluginTestCase):
             f'{out_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam\tbam\n']
         self.assertEqual(out_files, exp_out_files)
 
-        # the easiest to figure out the location of the artifact input files
+        # the easiest to figure out the 
+        # location of the artifact input files
         # is to check the first file of the raw forward reads
-        #VAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
+        #VAR_TRIM_BASE = 'ivar trim -x 5 -e 
+        # -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
         apath = dirname(artifact_info['files']['bam'][0])
         exp_commands = [
             f'ivar trim -x 5 -e -i CALM_SEP_001970_03_S265_L001.sorted.bam -b {QC_PRIMER_BED} -p CALM_SEP_001970_03_S265_L001.sorted.trimmed -m 100 -q 15 -s 4  ']
@@ -233,6 +238,8 @@ class IvarTrimTests(PluginTestCase):
         #    f'{out_dir}/S22282_S102_L001_R1_001.fastq.gz -2 '
         #    f'{out_dir}/S22282_S102_L001_R2_001.fastq.gz'
         self.assertEqual(commands, exp_commands)
+
+        
 '''
     def test_fastp_just_fwd(self):
         # inserting new prep template
