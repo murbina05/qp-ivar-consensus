@@ -77,8 +77,8 @@ jobs:
         shell: bash -l {0}
         run: |
           conda config --add channels bioconda
-          conda create --yes -n qp-fastp-minimap2 -c bioconda samtools=1.11 minimap2=2.17 fastp python=3.6
-          conda activate qp-fastp-minimap2
+          conda create --yes -n qp-ivar-trim -c bioconda samtools=1.11 ivar python=3.6
+          conda activate qp-ivar-trim
 
           export QIITA_SERVER_CERT=`pwd`/qiita-dev/qiita_core/support_files/server.crt
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
@@ -86,17 +86,13 @@ jobs:
           pip --quiet install .
           pip --quiet install coveralls
 
-          export QC_REFERENCE_DB=$PWD/qp_fastp_minimap2/support_files/databases/
-          for file in $(ls $QC_REFERENCE_DB/*.gz); do gunzip $file; done
+          export QC_PRIMER_BED=$PWD/qp_ivar_trim/support_files/databases/
+          for file in $(ls $QC_PRIMER_BED/*.gz); do gunzip $file; done
 
           samtools_version=`samtools --version`
-          minimap2_version=`minimap2 --version`
-          fastp_version=$(fastp --version 2>&1)
-          if [[ $samtools_version != *"1.11"* ]]; then echo "wrong samtools version", $samtools_version; exit 1; fi
-          if [[ $minimap2_version != *"2.17"* ]]; then echo "wrong minimap2 version", $minimap2_version; exit 1; fi
-          if [[ $fastp_version != *"23.2"* ]]; then echo "wrong fastp version", $fastp_version; exit 1; fi
+          
 
-          configure_qp_fastp_minimap2 --env-script "source ~/.bash_profile; conda activate qp-fastp-minimap2; export QC_REFERENCE_DB=${PWD}/qp_fastp_minimap2/support_files/databases/; export ENVIRONMENT='source ~/.bash_profile; source activate qp-fastp-minimap2; export QC_REFERENCE_DB=${PWD}/qp_fastp_minimap2/support_files/databases/'" --server-cert $QIITA_SERVER_CERT
+          configure_qp_ivar_trim --env-script "source ~/.bash_profile; conda activate qp-ivar-trim; export QC_PRIMER_BED=${PWD}/qp_ivar_trim/support_files/databases/; export ENVIRONMENT='source ~/.bash_profile; source activate qp-ivar-trim; export QC_PRIMER_BED=${PWD}/qp_ivar_trim/support_files/databases/'" --server-cert $QIITA_SERVER_CERT
 
           echo "Available Qiita plugins"
           ls ~/.qiita_plugins/
@@ -136,13 +132,13 @@ jobs:
         env:
           COVER_PACKAGE: ${{ matrix.cover_package }}
         run: |
-          conda activate qp-fastp-minimap2
+          conda activate qp-ivar-trim
           export QIITA_SERVER_CERT=`pwd`/qiita-dev/qiita_core/support_files/server.crt
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
-          export QC_REFERENCE_DB=$PWD/qp_fastp_minimap2/support_files/databases/
-          export ENVIRONMENT="source ~/.bash_profile; source activate qp-fastp-minimap2; export QC_REFERENCE_DB=${PWD}/qp_fastp_minimap2/support_files/databases/"
+          export QC_REFERENCE_DB=$PWD/qp_ivar_trim/support_files/databases/
+          export ENVIRONMENT="source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE_DB=${PWD}/qp_ivar_trim/support_files/databases/"
 
-          nosetests --with-doctest --with-coverage -v --cover-package=qp_fastp_minimap2
+          nosetests --with-doctest --with-coverage -v --cover-package=qp_ivar_trim
 
       - uses: codecov/codecov-action@v1
         with:
@@ -163,4 +159,4 @@ jobs:
     - name: lint
       run: |
         pip install -q flake8
-        flake8 qp_fastp_minimap2 setup.py scripts/*
+        flake8 qp_ivar_trim setup.py scripts/*

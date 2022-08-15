@@ -89,4 +89,4 @@ ENV/
 .ropeproject
 
 # help databases
-qp_fastp_minimap2/support_files/databases/*.mmi
+qp_ivar_trim/support_files/databases/*.mmi

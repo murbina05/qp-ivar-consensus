@@ -4,9 +4,9 @@
 omit =
     */test*
     */__init__.py
-source = qp_fastp_minimap2
+source = qp_ivar_trim
 branch = True
-include = */qp_fastp_minimap2/*
+include = */qp_ivar_trim/*
 
 [report]
 exclude_lines =

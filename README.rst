@@ -1,4 +1,4 @@
-qp-fastp-minimap2 Qiita Plugin
+qp-fastp Qiita Plugin
 ==============================
 
 |Build Status| |Coverage Status|
@@ -7,11 +7,11 @@ qp-fastp-minimap2 Qiita Plugin
 is an analysis environment for microbiome (and other "comparative -omics")
 datasets.
 
-This package includes the qp-fastp-minimap2 Qiita plugin.
+This package includes the qp-fastp Qiita plugin.
 
 How to test this package?
 -------------------------
-In order to test the qp-fastp-minimap2 package, a local
+In order to test the qp-fastp package, a local
 installation of Qiita should be running in test mode on the address
 `https://localhost:21174`, with the default test database created in Qiita's
 test suite. Also, if Qiita is running with the default server SSL certificate,
@@ -29,7 +29,7 @@ This plugin was created with `Cookiecutter <https://github.com/audreyr/cookiecut
 and the `qiita-spots/qp-template-cookiecutter <https://github.com/qiita-spots/qp-template-cookiecutter>`__
 project template.
 
-.. |Build Status| image:: https://travis-ci.org/qiita-spots/qp-fastp-minimap2.png?branch=master
-   :target: https://travis-ci.org/qiita-spots/qp-fastp-minimap2
-.. |Coverage Status| image:: https://coveralls.io/repos/qiita-spots/qp-fastp-minimap2/badge.png?branch=master
-   :target: https://coveralls.io/r/qiita-spots/qp-fastp-minimap2
+.. |Build Status| image:: https://travis-ci.org/qiita-spots/qp-fastp.png?branch=master
+   :target: https://travis-ci.org/qiita-spots/qp-fastp
+.. |Coverage Status| image:: https://coveralls.io/repos/qiita-spots/qp-fastp/badge.png?branch=master
+   :target: https://coveralls.io/r/qiita-spots/qp-fastp
