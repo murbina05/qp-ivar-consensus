@@ -39,7 +39,7 @@ setup(name='qp-ivar-trim',
       author_email="qiita.help@gmail.com",
       url='https://github.com/qiita-spots/qp-ivar-trim',
       test_suite='nose.collector',
-      packages=['qp_fastp'],
+      packages=['qp_ivar_trim'],
       package_data={'qp_ivar_trim': [
         'support_files/*', 'support_files/databases/*',
         'support_files/raw_data/*']},
