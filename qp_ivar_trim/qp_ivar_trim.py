@@ -44,11 +44,14 @@ IVAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
 IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 # i dont think i need this part
+
 def get_dbs_list():
-    folder = QC_PRIMER_BED 
+
+    folder = QC_PRIMER_BED
 
 
     # skip human database
+
     return [basename(f) for f in glob(f'{folder}/*.BA<') if 'human' not in f]
     
 
