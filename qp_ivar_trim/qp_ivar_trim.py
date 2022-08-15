@@ -21,7 +21,7 @@ WALLTIME = '30:00:00'
 FINISH_MEMORY = '10g'
 FINISH_WALLTIME = '10:00:00'
 MAX_RUNNING = 8
-#  -i    (Required) Sorted bam file, 
+#  -i    (Required) Sorted bam file,
 # with aligned reads, to trim primers and quality
 
 #  -b    (Required) BED file with 
