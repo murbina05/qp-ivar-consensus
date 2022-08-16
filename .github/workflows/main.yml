@@ -82,7 +82,7 @@ jobs:
 
           export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/references/
           for file in $(ls $QC_REFERENCE/*.bed); 
-
+          echo "break 1a"
           configure_qp_ivar_trim --env-script "source ~/.bash_profile; conda activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/; export ENVIRONMENT='source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/'" --server-cert $QIITA_SERVER_CERT
           echo "Available Qiita plugins"
           ls ~/.qiita_plugins/
