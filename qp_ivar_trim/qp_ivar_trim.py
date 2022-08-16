@@ -38,7 +38,7 @@ MAX_RUNNING = 8
 #  -e    Include reads with no primers.
 # By default, reads with no primers are excluded
 
-QC_PRIMER_BED = environ["QC_PRIMER_BED"]
+QC_REFERENCE = environ["QC_REFERENCE"]
 IVAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
 
 IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
@@ -48,7 +48,7 @@ IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 def get_dbs_list():
 
-    folder = QC_PRIMER_BED
+    folder = QC_REFERENCE
     # skip human database
 
     return [basename(f) for f in glob(f'{folder}/*.bam') if 'human' not in f]
@@ -61,7 +61,7 @@ def _generate_commands(BAM_file, prefix, out_dir,
                        min_length=30, min_quality=20, slideing_window_width=4):
     """Helper function to generate commands and facilite testing"""
     files = zip_longest(BAM_file)
-        # if BAM_file:   MIGHT BREAK :)
+# if BAM_file:   MIGHT BREAK :)
     cmd = IVAR_TRIM_CMD
 #        if database is not None:
 #            cmd = COMBINED_CMD
@@ -71,7 +71,8 @@ def _generate_commands(BAM_file, prefix, out_dir,
 #            cmd = COMBINED_CMD_SINGLE
     command = cmd.format(BAM_file=BAM_file, prefix=prefix,
                          min_length=min_length, min_quality=min_quality,
-                         slideing_window_width=slideing_window_width, out_dir=out_dir)
+                         slideing_window_width=slideing_window_width,
+                         out_dir=out_dir)
 
     out_files = []
     commands = []
@@ -158,7 +159,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
     """
     database = None
     if params['primer'] != 'None':
-        database = [join(QC_PRIMER_BED, f'{db}')
+        database = [join(QC_REFERENCE, f'{db}')
                     for db in get_dbs_list()
                     if params['primer'] in db][0]
 
