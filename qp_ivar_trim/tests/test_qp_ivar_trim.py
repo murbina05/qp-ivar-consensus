@@ -18,7 +18,8 @@ from functools import partial
 from qp_ivar_trim import plugin
 from qp_ivar_trim.utils import plugin_details
 from qp_ivar_trim.qp_ivar_trim import (
-    get_dbs_list, _generate_commands, ivar_trim_to_array, QC_PRIMER_BED, IVAR_TRIM_CMD)
+    get_dbs_list, _generate_commands,
+    ivar_trim_to_array, QC_PRIMER_BED, IVAR_TRIM_CMD)
 
 
 class IvarTrimTests(PluginTestCase):

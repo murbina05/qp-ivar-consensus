@@ -45,11 +45,11 @@ IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 # i dont think i need this part
 
+
 def get_dbs_list():
 
+
     folder = QC_PRIMER_BED
-
-
     # skip human database
 
     return [basename(f) for f in glob(f'{folder}/*.BA<') if 'human' not in f]
@@ -58,7 +58,8 @@ def get_dbs_list():
 # might need to add envrionment var, passes database
 # however not need due to not using minimap2 :/
 
-def _generate_commands(BAM_file, prefix, out_dir, min_length = 30, min_quality = 20, slideing_window_width = 4):
+def _generate_commands(BAM_file, prefix, out_dir, 
+min_length=30, min_quality=20, slideing_window_width=4):
     """Helper function to generate commands and facilite testing"""
     files = zip_longest(BAM_file)
     # if BAM_file:   MIGHT BREAK :)
@@ -69,7 +70,9 @@ def _generate_commands(BAM_file, prefix, out_dir, min_length = 30, min_quality =
 #        cmd = FASTP_CMD_SINGLE
 #        if database is not None:
 #            cmd = COMBINED_CMD_SINGLE
-    command = cmd.format(BAM_file = BAM_file, prefix = prefix, min_length = min_length, min_quality = min_quality, slideing_window_width = slideing_window_width, out_dir = out_dir)
+    command = cmd.format(BAM_file=BAM_file, prefix=prefix,
+    min_length=min_length, min_quality=min_quality,
+     slideing_window_width=slideing_window_width, out_dir=out_dir)
 
     out_files = []
     commands = []
