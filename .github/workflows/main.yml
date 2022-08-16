@@ -76,7 +76,7 @@ jobs:
           export QIITA_SERVER_CERT=`pwd`/qiita-dev/qiita_core/support_files/server.crt
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
           pip --quiet install -U pip
-          pip --quiet install .
+          pip --quiet install . --ignore-installed
           pip --quiet install coveralls
           export QC_PRIMER_BED=$PWD/qp_ivar_trim/support_files/databases/
           for file in $(ls $QC_PRIMER_BED/*.bed); 
