@@ -66,7 +66,7 @@ def _generate_commands(BAM_file, prefix, out_dir,
 #        if database is not None:
 #            cmd = COMBINED_CMD
 #    else:
-#        cmd = FASTP_CMD_SINGLE
+#        cmd =_CMD_SINGLE
 #        if database is not None:
 #            cmd = COMBINED_CMD_SINGLE
     command = cmd.format(BAM_file=BAM_file, prefix=prefix,
@@ -129,7 +129,7 @@ def ivar_trim(qclient, job_id, parameters, out_dir):
     msg = "Step 4 of 4: Generating new artifact"
     qclient.update_job_step(job_id, msg)
     ainfo = [ArtifactInfo('Filtered files', 'bam', out_files)]
-#   ^^^^ looks like the fastp part might need to change ^^^^
+#   ^^^^ looks like the  part might need to change ^^^^
 #       might need to change to fastq for multisample pipeline
     return True, ainfo, ""
 

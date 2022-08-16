@@ -7,7 +7,7 @@
 # -----------------------------------------------------------------------------
 
 from qiita_client import QiitaPlugin, QiitaCommand
-from .qp_ivar_trim import get_dbs_list, fastp
+from .qp_ivar_trim import get_dbs_list, ivar_trim
 from .utils import plugin_details
 from os.path import splitext
 
@@ -38,6 +38,6 @@ for db in dbs_without_extension:
 
 IVAR_TRIM_cmd = QiitaCommand(
     'Trim reads in aligned BAM ', "",
-    fastp, req_params, opt_params, outputs, default_params)
+    ivar_trim, req_params, opt_params, outputs, default_params)
 # i have no idea what to put here :) ^^^^
 plugin.register_command(IVAR_TRIM_cmd)

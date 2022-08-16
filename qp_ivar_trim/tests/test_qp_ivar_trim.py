@@ -239,7 +239,7 @@ class IvarTrimTests(PluginTestCase):
         #    'samtools fastq -@ 2 -f  12 -F 256 -1 '
         #    f'{out_dir}/S22205_S104_L001_R1_001.fastq.gz -2 '
         #    f'{out_dir}/S22205_S104_L001_R2_001.fastq.gz\n',
-        #    f'fastp -l 100 -i {apath}/S22282_S102_L001_R1_001.fastq.gz -w 2  '
+        #    f' -l 100 -i {apath}/S22282_S102_L001_R1_001.fastq.gz -w 2  '
         #    f'-I {apath}/S22282_S102_L001_R2_001.fastq.gz --stdout | '
         #    'samtools fastq -@ 2 -f  12 -F 256 -1 '
         #    f'{out_dir}/S22282_S102_L001_R1_001.fastq.gz -2 '
