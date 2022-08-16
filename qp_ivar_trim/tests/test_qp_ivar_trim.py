@@ -246,7 +246,6 @@ class IvarTrimTests(PluginTestCase):
         #    f'{out_dir}/S22282_S102_L001_R2_001.fastq.gz'
         self.assertEqual(commands, exp_commands)
 
-
     def test_ivar_trim_just_fwd(self):
         # inserting new prep template
         prep_info_dict = {
@@ -315,7 +314,7 @@ class IvarTrimTests(PluginTestCase):
             finish_qsub = f.readlines()
         with open(out_files_fp) as f:
             out_files = f.readlines()
-        with open(f'{out_dir}/fastp.array-details') as f:
+        with open(f'{out_dir}/ivar_trim.array-details') as f:
             commands = f.readlines()
 
         exp_main_qsub = [
@@ -337,7 +336,7 @@ class IvarTrimTests(PluginTestCase):
             'hostname\n',
             'echo ${PBS_JOBID} ${PBS_ARRAYID}\n',
             'offset=${PBS_ARRAYID}\n', 'step=$(( $offset - 0 ))\n',
-            f'cmd=$(head -n $step {out_dir}/fastp.array-details | '
+            f'cmd=$(head -n $step {out_dir}/ivar_trim.array-details | '
             'tail -n 1)\n',
             'eval $cmd\n',
             'set +e\n',
@@ -366,11 +365,10 @@ class IvarTrimTests(PluginTestCase):
         self.assertEqual(finish_qsub, exp_finish_qsub)
 
         exp_out_files = [
-            f'{out_dir}/S22205_S104_L001_R1',
-            '_001.fastq.gz\,tuntrimmed_sorted_bam_seqs\n']
+            f'{out_dir}/S22205_S104_L001_R1_001.fastq.gz\,bam\n']
         self.assertEqual(out_files, exp_out_files)
 
-        # the easiest to figure out the 
+        # the easiest to figure out the
         # location of the artifact input files
 
         # is to check the first file of the raw forward reads
