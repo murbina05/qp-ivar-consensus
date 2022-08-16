@@ -30,7 +30,7 @@ class IvarTrimTests(PluginTestCase):
         self.maxDiff = None
         self.out_dir = out_dir
         self.dbs = get_dbs_list()
-        self.db_path = QC_PRIMER_BED # need to make envrionment variable
+        self.db_path = QC_PRIMER_BED  # need to make envrionment variable
         self.params = {'reference': 'artifacts', 'threads': 2}
         self._clean_up_files = []
         self._clean_up_files.append(out_dir)
@@ -45,12 +45,13 @@ class IvarTrimTests(PluginTestCase):
 
     def test_get_dbs_list(self):
         dbs = get_dbs_list()
-        self.assertCountEqual(dbs, ['artifacts.mmi', 'empty.mmi']) # might need to change this
+        self.assertCountEqual(dbs, ['artifacts.mmi', 'empty.mmi'])  
+        # might need to change this
 
     def test_generate_commands(self):
         params = {'database': 'artifacts', 'nprocs': 2,
                   'out_dir': '/foo/bar/output'}
-        # need to change these to bam 
+        # need to change these to bam
         BAM_file = ['CALM_SEP_001970_03_S265_L001.sorted.bam']
         obs = _generate_commands(BAM_file, params['database'],
                                  params['nprocs'], params['out_dir'])
@@ -59,7 +60,7 @@ class IvarTrimTests(PluginTestCase):
                  for f, r in zip_longest(BAM_file)]
         eof = [(f'{params["out_dir"]}/{f}', 'bam')
                for f in sorted(BAM_file)]
-       # for f in sorted(rev_seqs):
+        # for f in sorted(rev_seqs):
         #    eof.append((f'{params["out_dir"]}/{f}',
         #  'raw_reverse_seqs'))
         self.assertCountEqual(obs[0], ecmds)
@@ -78,7 +79,7 @@ class IvarTrimTests(PluginTestCase):
         obs = _generate_commands(BAM_file, [], params['database'],
                                  params['nprocs'], params['out_dir'])
         # cmd = COMBINED_CMD_SINGLE.format(**params)
-        # ecmds = [cmd % (f, f) for 
+        # ecmds = [cmd % (f, f) for
         # f in fwd_seqs]
         # eof = [(f'{params["out_dir"]}/{f}',
         #  'raw_forward_seqs')
@@ -89,7 +90,7 @@ class IvarTrimTests(PluginTestCase):
         params['database'] = None
         obs = _generate_commands(BAM_file, [], params['database'],
                                  params['nprocs'], params['out_dir'])
-        # cmd = FASTP_CMD_SINGLE.format(**params)
+        cmd = IVAR_TRIM_CMD.format(**params)
         ecmds = [cmd % (f, f) for f in BAM_file]
         self.assertCountEqual(obs[0], ecmds)
         self.assertCountEqual(obs[1], eof)
@@ -113,7 +114,8 @@ class IvarTrimTests(PluginTestCase):
         # fp2_1 = join(in_dir, 'S22282_S102_L001_R1_001.fastq.gz')
         # fp2_2 = join(in_dir, 'S22282_S102_L001_R2_001.fastq.gz')
         source_dir = 'qp_ivar_trim/support_files/raw_data'
-        copyfile(f'{source_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam', fp1_1)
+        copyfile(f'{source_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam',
+             fp1_1)
         # copyfile(f'{source_dir}/S22205_S104_L001_R2_001.fastq.gz', fp1_2)
         # copyfile(f'{source_dir}/S22282_S102_L001_R1_001.fastq.gz', fp2_1)
         # copyfile(f'{source_dir}/S22282_S102_L001_R2_001.fastq.gz', fp2_2)
@@ -221,10 +223,10 @@ class IvarTrimTests(PluginTestCase):
             f'{out_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam\tbam\n']
         self.assertEqual(out_files, exp_out_files)
 
-        # the easiest to figure out the 
+        # the easiest to figure out the
         # location of the artifact input files
         # is to check the first file of the raw forward reads
-        # VAR_TRIM_BASE = 'ivar trim -x 5 -e 
+        # VAR_TRIM_BASE = 'ivar trim -x 5 -e
         # -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
         apath = dirname(artifact_info['files']['bam'][0])
         exp_commands = [
@@ -240,7 +242,7 @@ class IvarTrimTests(PluginTestCase):
         #    f'{out_dir}/S22282_S102_L001_R2_001.fastq.gz'
         self.assertEqual(commands, exp_commands)
 
-        
+
 '''
     def test_fastp_just_fwd(self):
         # inserting new prep template

@@ -48,18 +48,17 @@ IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 def get_dbs_list():
 
-
     folder = QC_PRIMER_BED
     # skip human database
 
-    return [basename(f) for f in glob(f'{folder}/*.BA<') if 'human' not in f]
+    return [basename(f) for f in glob(f'{folder}/*.bam') if 'human' not in f]
     
 
 # might need to add envrionment var, passes database
 # however not need due to not using minimap2 :/
 
-def _generate_commands(BAM_file, prefix, out_dir, 
-min_length=30, min_quality=20, slideing_window_width=4):
+def _generate_commands(BAM_file, prefix, out_dir,
+    min_length=30, min_quality=20, slideing_window_width=4):
     """Helper function to generate commands and facilite testing"""
     files = zip_longest(BAM_file)
     # if BAM_file:   MIGHT BREAK :)
@@ -71,17 +70,18 @@ min_length=30, min_quality=20, slideing_window_width=4):
 #        if database is not None:
 #            cmd = COMBINED_CMD_SINGLE
     command = cmd.format(BAM_file=BAM_file, prefix=prefix,
-    min_length=min_length, min_quality=min_quality,
-     slideing_window_width=slideing_window_width, out_dir=out_dir)
+        min_length=min_length, min_quality=min_quality,
+        slideing_window_width=slideing_window_width, out_dir=out_dir)
 
     out_files = []
     commands = []
     for i, (BAM_file) in enumerate(files):
         fname = basename(BAM_file)
-        out_files.append((f'{out_dir}/{fname}', 'untrimmed_sorted_bam')) #might be trimmed 
+        out_files.append((f'{out_dir}/{fname}', 'untrimmed_sorted_bam'))  # might be trimmed 
 #        if rev_fp:
 #            rname = basename(rev_fp)
-#            out_files.append((f'{out_dir}/{rname}', 'raw_reverse_seqs'))
+#            out_files.append((f'{out_dir}/{rname}',
+#            'raw_reverse_seqs'))
 #            cmd = command % (fwd_fp, rev_fp, fname, rname)
 #        else:
         cmd = command % (BAM_file, fname)
