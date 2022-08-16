@@ -41,7 +41,7 @@ setup(name='qp-ivar-trim',
       test_suite='nose.collector',
       packages=['qp_ivar_trim'],
       package_data={'qp_ivar_trim': [
-        'support_files/*', 'support_files/databases/*',
+        'support_files/*', 'support_files/references/*',
         'support_files/raw_data/*']},
       scripts=glob('scripts/*'),
       extras_require={'test': ["nose >= 0.10.1", "pep8"]},

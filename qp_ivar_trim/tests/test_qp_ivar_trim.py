@@ -228,7 +228,7 @@ class IvarTrimTests(PluginTestCase):
         # is to check the first file of the raw forward reads
         # VAR_TRIM_BASE = 'ivar trim -x 5 -e
         # -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
-        #apath = dirname(artifact_info['files']['bam'][0])
+        # apath = dirname(artifact_info['files']['bam'][0])
         exp_commands = ['ivar trim -x 5 -e',
                         '-i CALM_SEP_001970_03_S265_L001.sorted.bam',
                         '-b {QC_REFERENCE}',
@@ -245,7 +245,6 @@ class IvarTrimTests(PluginTestCase):
         #    f'{out_dir}/S22282_S102_L001_R1_001.fastq.gz -2 '
         #    f'{out_dir}/S22282_S102_L001_R2_001.fastq.gz'
         self.assertEqual(commands, exp_commands)
-
 
 
     def test_ivar_trim_just_fwd(self):
@@ -367,12 +366,16 @@ class IvarTrimTests(PluginTestCase):
         self.assertEqual(finish_qsub, exp_finish_qsub)
 
         exp_out_files = [
-            f'{out_dir}/S22205_S104_L001_R1_001.fastq.gz\tuntrimmed_sorted_bam_seqs\n']
+            f'{out_dir}/S22205_S104_L001_R1',
+            '_001.fastq.gz\,tuntrimmed_sorted_bam_seqs\n']
         self.assertEqual(out_files, exp_out_files)
 
-        # the easiest to figure out the location of the artifact input files
+        # the easiest to figure out the 
+        # location of the artifact input files
+
         # is to check the first file of the raw forward reads
-        #apath = dirname(artifact_info['files']['raw_forward_seqs'][0])
+        # apath = dirname(artifact_info['files']
+        # ['raw_forward_seqs'][0])
         exp_commands = ['ivar trim -x 5 -e',
                         '-i CALM_SEP_001970_03_S265_L001.sorted.bam',
                         '-b {QC_REFERENCE}',
