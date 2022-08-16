@@ -58,7 +58,7 @@ def get_dbs_list():
 # however not need due to not using minimap2 :/
 
 def _generate_commands(BAM_file, prefix, out_dir,
-            min_length=30, min_quality=20, slideing_window_width=4):
+          min_length=30, min_quality=20, slideing_window_width=4):
         """Helper function to generate commands and facilite testing"""
         files = zip_longest(BAM_file)
         # if BAM_file:   MIGHT BREAK :)
