@@ -104,9 +104,13 @@ jobs:
           sed "s#/home/runner/work/qiita/qiita#${PWD}/qiita-dev/#g" ${NGINX_FILE} > ${NGINX_FILE_NEW}
           nginx -c ${NGINX_FILE_NEW}
           echo "3. Setting up qiita"
-          qiita-env make --no-load-ontologies --ignore-installed
+          echo "break 2a"
+          qiita-env make --no-load-ontologies
+          echo "break 2b"
           qiita plugins update
+          echo "break 2c"
           qiita-test-install
+          echo "break 2d"
           echo "4. Starting supervisord => multiple qiita instances"
           supervisord -c ${PWD}/qiita-dev/qiita_pet/supervisor_example.conf
           sleep 10
