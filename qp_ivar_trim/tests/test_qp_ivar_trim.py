@@ -45,7 +45,7 @@ class IvarTrimTests(PluginTestCase):
 
     def test_get_dbs_list(self):
         dbs = get_dbs_list()
-        self.assertCountEqual(dbs, ['artifacts.mmi', 'empty.mmi'])  
+        self.assertCountEqual(dbs, ['artifacts.mmi', 'empty.mmi'])
         # might need to change this
 
     def test_generate_commands(self):
@@ -55,7 +55,7 @@ class IvarTrimTests(PluginTestCase):
         BAM_file = ['CALM_SEP_001970_03_S265_L001.sorted.bam']
         obs = _generate_commands(BAM_file, params['database'],
                                  params['nprocs'], params['out_dir'])
-        # cmd = COMBINED_CMD.format(**params)
+        cmd = IVAR_TRIM_CMD.format(**params)
         ecmds = [cmd % (f, r, f, r)
                  for f, r in zip_longest(BAM_file)]
         eof = [(f'{params["out_dir"]}/{f}', 'bam')
@@ -116,6 +116,7 @@ class IvarTrimTests(PluginTestCase):
         source_dir = 'qp_ivar_trim/support_files/raw_data'
         copyfile(f'{source_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam',
              fp1_1)
+             
         # copyfile(f'{source_dir}/S22205_S104_L001_R2_001.fastq.gz', fp1_2)
         # copyfile(f'{source_dir}/S22282_S102_L001_R1_001.fastq.gz', fp2_1)
         # copyfile(f'{source_dir}/S22282_S102_L001_R2_001.fastq.gz', fp2_2)
@@ -230,7 +231,9 @@ class IvarTrimTests(PluginTestCase):
         # -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
         apath = dirname(artifact_info['files']['bam'][0])
         exp_commands = [
-            f'ivar trim -x 5 -e -i CALM_SEP_001970_03_S265_L001.sorted.bam -b {QC_PRIMER_BED} -p CALM_SEP_001970_03_S265_L001.sorted.trimmed -m 100 -q 15 -s 4  ']
+            f'ivar trim -x 5 -e -i CALM_SEP_001970_03_S265_L001.sorted.bam', 
+                 '-b {QC_PRIMER_BED} -p CALM_SEP_001970_03_S265_L001.sorted.trimmed', 
+                 '-m 100 -q 15 -s 4  ']
         #   f'-I {apath}/S22205_S104_L001_R2_001.fastq.gz --stdout | '
         #    'samtools fastq -@ 2 -f  12 -F 256 -1 '
         #    f'{out_dir}/S22205_S104_L001_R1_001.fastq.gz -2 '
