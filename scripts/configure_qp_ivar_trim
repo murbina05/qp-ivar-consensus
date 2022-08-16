@@ -9,7 +9,7 @@
 # -----------------------------------------------------------------------------
 
 import click
-from qp_ivar_trim import plugin
+from qp_ivar_trim.qp_ivar_trim import plugin
 
 
 @click.command()

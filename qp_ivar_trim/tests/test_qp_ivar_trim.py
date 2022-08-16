@@ -229,8 +229,10 @@ class IvarTrimTests(PluginTestCase):
         # VAR_TRIM_BASE = 'ivar trim -x 5 -e
         # -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
         # apath = dirname(artifact_info['files']['bam'][0])
-        exp_commands = ['ivar trim -x 5 -e -i CALM_SEP_001970_03_S265_L001.sorted.bam',
-            '-b {QC_PRIMER_BED} -p CALM_SEP_001970_03_S265_L001.sorted.trimmed',
+        exp_commands = ['ivar trim -x 5 -e',
+            '-i CALM_SEP_001970_03_S265_L001.sorted.bam',
+            '-b {QC_PRIMER_BED}',
+            '-p CALM_SEP_001970_03_S265_L001.sorted.trimmed',
             '-m 100 -q 15 -s 4  ']
         #   f'-I {apath}/S22205_S104_L001_R2_0
         #   01.fastq.gz --stdout | '
