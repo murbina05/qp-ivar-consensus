@@ -11,6 +11,7 @@
 import click
 from qp_ivar_trim import plugin
 
+
 @click.command()
 @click.option('--env-script', prompt='Environment script',
               default='source activate qp-ivar-trim')
