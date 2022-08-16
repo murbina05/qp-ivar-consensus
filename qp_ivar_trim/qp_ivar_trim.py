@@ -58,38 +58,38 @@ def get_dbs_list():
 # however not need due to not using minimap2 :/
 
 def _generate_commands(BAM_file, prefix, out_dir,
-     min_length=30, min_quality=20, slideing_window_width=4):
-    """Helper function to generate commands and facilite testing"""
-    files = zip_longest(BAM_file)
-    # if BAM_file:   MIGHT BREAK :)
-    cmd = IVAR_TRIM_CMD
+      min_length=30, min_quality=20, slideing_window_width=4):
+        """Helper function to generate commands and facilite testing"""
+        files = zip_longest(BAM_file)
+        # if BAM_file:   MIGHT BREAK :)
+        cmd = IVAR_TRIM_CMD
 #        if database is not None:
 #            cmd = COMBINED_CMD
 #    else:
 #        cmd = FASTP_CMD_SINGLE
 #        if database is not None:
 #            cmd = COMBINED_CMD_SINGLE
-    command = cmd.format(BAM_file=BAM_file, prefix=prefix,
-         min_length=min_length, min_quality=min_quality,
-         slideing_window_width=slideing_window_width, out_dir=out_dir)
+        command = cmd.format(BAM_file=BAM_file, prefix=prefix,
+             min_length=min_length, min_quality=min_quality,
+             slideing_window_width=slideing_window_width, out_dir=out_dir)
 
-    out_files = []
-    commands = []
-    for i, (BAM_file) in enumerate(files):
-        fname = basename(BAM_file)
-        out_files.append((f'{out_dir}/{fname}',
-             'untrimmed_sorted_bam'))  # might be trimmed 
+        out_files = []
+        commands = []
+        for i, (BAM_file) in enumerate(files):
+            fname = basename(BAM_file)
+            out_files.append((f'{out_dir}/{fname}',
+                 'untrimmed_sorted_bam'))  # might be trimmed
 #        if rev_fp:
 #            rname = basename(rev_fp)
 #            out_files.append((f'{out_dir}/{rname}',
 #            'raw_reverse_seqs'))
 #            cmd = command % (fwd_fp, rev_fp, fname, rname)
 #        else:
-        cmd = command % (BAM_file, fname)
-        print("THE COMMAND IS: ", cmd)
-        commands.append(cmd)
+            cmd = command % (BAM_file, fname)
+            print("THE COMMAND IS: ", cmd)
+            commands.append(cmd)
 
-    return commands, out_files
+        return commands, out_files
 
 
 def ivar_trim(qclient, job_id, parameters, out_dir):
@@ -128,7 +128,8 @@ def ivar_trim(qclient, job_id, parameters, out_dir):
     msg = "Step 4 of 4: Generating new artifact"
     qclient.update_job_step(job_id, msg)
     ainfo = [ArtifactInfo('Filtered files', 'bam', out_files)]
-#   ^^^^ looks like the fastp part might need to change ^^^^      might need to change to fastq for multisample pipeline
+#   ^^^^ looks like the fastp part might need to change ^^^^
+#       might need to change to fastq for multisample pipeline
     return True, ainfo, ""
 
 
