@@ -43,9 +43,13 @@ IVAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
 
 IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
+# i dont think i need this part
+
 
 def get_dbs_list():
+
     folder = QC_REFERENCE
+    # skip human database
     list = [basename(f) for f in glob(f'{folder}/*.bed')]
     return list
 
@@ -124,7 +128,7 @@ def ivar_trim(qclient, job_id, parameters, out_dir):
     # Step 4 generating artifacts
     msg = "Step 4 of 4: Generating new artifact"
     qclient.update_job_step(job_id, msg)
-    ainfo = [ArtifactInfo('Filtered files', 'per_sample_BAM', out_files)]
+    ainfo = [ArtifactInfo('Filtered files', 'bam', out_files)]
 #   ^^^^ looks like the  part might need to change ^^^^
 #       might need to change to fastq for multisample pipeline
     return True, ainfo, ""
@@ -155,10 +159,9 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
     """
     database = None
     if params['primer'] != 'None':
-        list = get_dbs_list
         database = [join(QC_REFERENCE, f'{db}')
-                    for db in list
-                    if params['reference'] in db][0]
+                    for db in get_dbs_list()
+                    if params['primer'] in db][0]
 
     bam_reads = sorted(files['untrimmed_sorted_bam'])
 #    if 'raw_reverse_seqs' in files:

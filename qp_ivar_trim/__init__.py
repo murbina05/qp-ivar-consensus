@@ -22,7 +22,7 @@ plugin = QiitaPlugin(**plugin_details)
 dbs = get_dbs_list()
 dbs_without_extension = [splitext(db)[0] for db in dbs]
 dbs_defaults = ', '.join([f'"{x}"' for x in dbs_without_extension])
-req_params = {'input': ('artifact', ['per_sample_BAM'])}
+req_params = {'input': ('artifact', ['ba,'])}
 opt_params = {
     'reference': [
         f'choice:["None", {dbs_defaults}]', dbs_without_extension[0]],
@@ -39,5 +39,5 @@ for db in dbs_without_extension:
 IVAR_TRIM_cmd = QiitaCommand(
     'Trim reads in aligned BAM ', "",
     ivar_trim, req_params, opt_params, outputs, default_params)
-
+# i have no idea what to put here :) ^^^^
 plugin.register_command(IVAR_TRIM_cmd)
