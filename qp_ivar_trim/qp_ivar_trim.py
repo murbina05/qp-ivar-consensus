@@ -38,7 +38,7 @@ MAX_RUNNING = 8
 #  -e    Include reads with no primers.
 # By default, reads with no primers are excluded
 
-QC_REFERENCE = environ["QC_REFERENCE"]
+QC_REFERENCES = environ["QC_REFERENCES"]
 IVAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
 
 IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
@@ -48,7 +48,7 @@ IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 def get_dbs_list():
 
-    folder = QC_REFERENCE
+    folder = QC_REFERENCES
     # skip human database
     list = [basename(f) for f in glob(f'{folder}/*.bed')]
     return list
@@ -128,7 +128,7 @@ def ivar_trim(qclient, job_id, parameters, out_dir):
     # Step 4 generating artifacts
     msg = "Step 4 of 4: Generating new artifact"
     qclient.update_job_step(job_id, msg)
-    ainfo = [ArtifactInfo('Filtered files', 'bam', out_files)]
+    ainfo = [ArtifactInfo('Filtered files', 'per_sample_BAM', out_files)]
 #   ^^^^ looks like the  part might need to change ^^^^
 #       might need to change to fastq for multisample pipeline
     return True, ainfo, ""
@@ -159,7 +159,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
     """
     database = None
     if params['primer'] != 'None':
-        database = [join(QC_REFERENCE, f'{db}')
+        database = [join(QC_REFERENCES, f'{db}')
                     for db in get_dbs_list()
                     if params['primer'] in db][0]
 
