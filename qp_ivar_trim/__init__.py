@@ -39,5 +39,5 @@ for db in dbs_without_extension:
 IVAR_TRIM_cmd = QiitaCommand(
     'Trim reads in aligned BAM ', "",
     ivar_trim, req_params, opt_params, outputs, default_params)
-    
+
 plugin.register_command(IVAR_TRIM_cmd)

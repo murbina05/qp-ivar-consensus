@@ -38,14 +38,14 @@ MAX_RUNNING = 8
 #  -e    Include reads with no primers.
 # By default, reads with no primers are excluded
 
-QC_REFERENCES = environ["QC_REFERENCES"]
+QC_REFERENCE = environ["QC_REFERENCE"]
 IVAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
 
 IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 
 def get_dbs_list():
-    folder = QC_REFERENCES
+    folder = QC_REFERENCE
     list = [basename(f) for f in glob(f'{folder}/*.bed')]
     return list
 
@@ -156,7 +156,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
     database = None
     if params['primer'] != 'None':
         list = get_dbs_list
-        database = [join(QC_REFERENCES, f'{db}')
+        database = [join(QC_REFERENCE, f'{db}')
                     for db in list
                     if params['reference'] in db][0]
 
