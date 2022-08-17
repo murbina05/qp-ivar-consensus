@@ -62,4 +62,3 @@ def execute(url, job_id, out_dir):
 
 if __name__ == '__main__':
     execute()
-    
