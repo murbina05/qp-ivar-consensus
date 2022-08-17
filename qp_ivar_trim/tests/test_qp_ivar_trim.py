@@ -19,7 +19,7 @@ from qp_ivar_trim import plugin
 from qp_ivar_trim.utils import plugin_details
 from qp_ivar_trim.qp_ivar_trim import (
     get_dbs_list, _generate_commands,
-    ivar_trim_to_array, QC_REFERENCE, IVAR_TRIM_CMD)
+    ivar_trim_to_array, QC_REFERENCES, IVAR_TRIM_CMD)
 
 
 class IvarTrimTests(PluginTestCase):
@@ -30,7 +30,7 @@ class IvarTrimTests(PluginTestCase):
         self.maxDiff = None
         self.out_dir = out_dir
         self.dbs = get_dbs_list()
-        self.db_path = QC_REFERENCE  # need to make envrionment variable
+        self.db_path = QC_REFERENCES  # need to make envrionment variable
         self.params = {'reference': 'artifacts', 'threads': 2}
         self._clean_up_files = []
         self._clean_up_files.append(out_dir)
@@ -186,7 +186,7 @@ class IvarTrimTests(PluginTestCase):
             'set -e\n',
             f'cd {out_dir}\n',
             'source ~/.bash_profile; source activate qp-ivar-trim; '
-            f'export QC_REFERENCE={QC_REFERENCE}\n',
+            f'export QC_REFERENCES={QC_REFERENCES}\n',
             'date\n',
             'hostname\n',
             'echo ${PBS_JOBID} ${PBS_ARRAYID}\n',
@@ -211,7 +211,7 @@ class IvarTrimTests(PluginTestCase):
             'set -e\n',
             f'cd {out_dir}\n',
             'source ~/.bash_profile; source activate qp-ivar-trim; '
-            f'export QC_REFERENCE={QC_REFERENCE}\n',
+            f'export QC_REFERENCES={QC_REFERENCES}\n',
             'date\n',
             'hostname\n',
             'echo $PBS_JOBID\n',
@@ -231,7 +231,7 @@ class IvarTrimTests(PluginTestCase):
         # apath = dirname(artifact_info['files']['bam'][0])
         exp_commands = ['ivar trim -x 5 -e',
                         '-i CALM_SEP_001970_03_S265_L001.sorted.bam',
-                        '-b {QC_REFERENCE}',
+                        '-b {QC_REFERENCES}',
                         '-p CALM_SEP_001970_03_S265_L001.sorted.trimmed',
                         '-m 100 -q 15 -s 4  ']
         #   f'-I {apath}/S22205_S104_L001_R2_0
@@ -331,7 +331,7 @@ class IvarTrimTests(PluginTestCase):
             'set -e\n',
             f'cd {out_dir}\n',
             'source ~/.bash_profile; source activate qp-ivar-trim; '
-            f'export QC_REFERENCE={QC_REFERENCE}\n',
+            f'export QC_REFERENCES={QC_REFERENCES}\n',
             'date\n',
             'hostname\n',
             'echo ${PBS_JOBID} ${PBS_ARRAYID}\n',
@@ -356,7 +356,7 @@ class IvarTrimTests(PluginTestCase):
             'set -e\n',
             f'cd {out_dir}\n',
             'source ~/.bash_profile; source activate qp-ivar-trim; '
-            f'export QC_REFERENCE={QC_REFERENCE}\n',
+            f'export QC_REFERENCES={QC_REFERENCES}\n',
             'date\n',
             'hostname\n',
             'echo $PBS_JOBID\n',
@@ -376,7 +376,7 @@ class IvarTrimTests(PluginTestCase):
         # ['raw_forward_seqs'][0])
         exp_commands = ['ivar trim -x 5 -e',
                         '-i CALM_SEP_001970_03_S265_L001.sorted.bam',
-                        '-b {QC_REFERENCE}',
+                        '-b {QC_REFERENCES}',
                         '-p CALM_SEP_001970_03_S265_L001.sorted.trimmed',
                         '-m 100 -q 15 -s 4  ']
         self.assertEqual(commands, exp_commands)

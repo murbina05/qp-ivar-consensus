@@ -83,7 +83,7 @@ jobs:
           pip --quiet install . --ignore-installed
           pip --quiet install coveralls
 
-          export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/references/
+          export QC_REFERENCES=$PWD/qp_ivar_trim/support_files/references/
 
           ivar_version=`ivar version`
           cat | ivar version
@@ -130,8 +130,8 @@ jobs:
           conda activate qp-ivar-trim
           export QIITA_SERVER_CERT=`pwd`/qiita-dev/qiita_core/support_files/server.crt
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
-          export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/referencess/
-          export ENVIRONMENT="source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/"
+          export QC_REFERENCES=$PWD/qp_ivar_trim/support_files/referencess/
+          export ENVIRONMENT="source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCES=${PWD}/qp_ivar_trim/support_files/references/"
 
           nosetests --with-doctest --with-coverage -v --cover-package=qp_ivar_trim
       - uses: codecov/codecov-action@v1
