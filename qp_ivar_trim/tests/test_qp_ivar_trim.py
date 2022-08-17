@@ -245,7 +245,7 @@ class IvarTrimTests(PluginTestCase):
         #    f'{out_dir}/S22282_S102_L001_R1_001.fastq.gz -2 '
         #    f'{out_dir}/S22282_S102_L001_R2_001.fastq.gz'
         self.assertEqual(commands, exp_commands)
-
+'''
     def test_ivar_trim_just_fwd(self):
         # inserting new prep template
         prep_info_dict = {
@@ -380,7 +380,7 @@ class IvarTrimTests(PluginTestCase):
                         '-p CALM_SEP_001970_03_S265_L001.sorted.trimmed',
                         '-m 100 -q 15 -s 4  ']
         self.assertEqual(commands, exp_commands)
-
+'''
 
 if __name__ == '__main__':
     main()

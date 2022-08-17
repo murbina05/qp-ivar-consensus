@@ -6,14 +6,13 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from asyncore import write
 from qiita_client import QiitaPlugin, QiitaCommand
 from .qp_ivar_trim import get_dbs_list, ivar_trim
 from .utils import plugin_details
 from os.path import splitext
 
 
-THREADS = 15 
+THREADS = 15
 
 
 # Initialize the plugin
