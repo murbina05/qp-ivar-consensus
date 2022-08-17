@@ -1,4 +1,4 @@
-qp-fastp Qiita Plugin
+qp-ivar-trim Qiita Plugin
 ==============================
 
 |Build Status| |Coverage Status|
@@ -11,7 +11,7 @@ This package includes the qp-fastp Qiita plugin.
 
 How to test this package?
 -------------------------
-In order to test the qp-fastp package, a local
+In order to test the qp-ivar-trim package, a local
 installation of Qiita should be running in test mode on the address
 `https://localhost:21174`, with the default test database created in Qiita's
 test suite. Also, if Qiita is running with the default server SSL certificate,
@@ -29,7 +29,7 @@ This plugin was created with `Cookiecutter <https://github.com/audreyr/cookiecut
 and the `qiita-spots/qp-template-cookiecutter <https://github.com/qiita-spots/qp-template-cookiecutter>`__
 project template.
 
-.. |Build Status| image:: https://travis-ci.org/qiita-spots/qp-fastp.png?branch=master
-   :target: https://travis-ci.org/qiita-spots/qp-fastp
-.. |Coverage Status| image:: https://coveralls.io/repos/qiita-spots/qp-fastp/badge.png?branch=master
-   :target: https://coveralls.io/r/qiita-spots/qp-fastp
+.. |Build Status| image:: https://travis-ci.org/qiita-spots/qp-ivar-trim.png?branch=master
+   :target: https://travis-ci.org/qiita-spots/qp-ivar-trim
+.. |Coverage Status| image:: https://coveralls.io/repos/qiita-spots/qp-ivar-trim/badge.png?branch=master
+   :target: https://coveralls.io/r/qiita-spots/qp-ivar-trim

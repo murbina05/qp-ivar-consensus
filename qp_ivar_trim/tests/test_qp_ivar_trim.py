@@ -43,9 +43,9 @@ class IvarTrimTests(PluginTestCase):
                 else:
                     remove(fp)
 
-#    def test_get_dbs_list(self):
-#        dbs = get_dbs_list()
-#        self.assertCountEqual(dbs, ['artifacts.mmi', 'empty.mmi'])
+    def test_get_dbs_list(self):
+        dbs = get_dbs_list()
+        self.assertCountEqual(dbs, ['primer.bed'])
         # might need to change this
 
     def test_generate_commands(self):
@@ -96,8 +96,9 @@ def test_ivar_trim(self):
 
         data = {
             'filepaths': dumps([
-                (fp1_1, 'bam')]),
-            'type': "bam",
+                (fp1_1, 'bam')]
+                (fp1_2, 'bam')),
+            'type': "per_sample_bam",
             'name': "Test artifact",
             'prep': pid}
         aid = self.qclient.post('/apitest/artifact/', data=data)['artifact']
