@@ -11,10 +11,9 @@ from qiita_client import QiitaPlugin, QiitaCommand
 from .qp_ivar_trim import get_dbs_list, ivar_trim
 from .utils import plugin_details
 from os.path import splitext
-import sys
 
 
-THREADS = 15
+THREADS = 15 
 
 
 # Initialize the plugin
@@ -22,7 +21,6 @@ plugin = QiitaPlugin(**plugin_details)
 
 # Define the command
 dbs = get_dbs_list()
-sys.stdout.write(str(dbs))
 dbs_without_extension = [splitext(db)[0] for db in dbs]
 dbs_defaults = ', '.join([f'"{x}"' for x in dbs_without_extension])
 req_params = {'input': ('artifact', ['per_sample_FASTQ'])}

@@ -129,12 +129,17 @@ jobs:
           COVER_PACKAGE: ${{ matrix.cover_package }}
         run: |
           conda activate qp-ivar-trim
+          echo "break 1"
           export QIITA_SERVER_CERT=`pwd`/qiita-dev/qiita_core/support_files/server.crt
+          echo "break 2"
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
+          echo "break 3"
           export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/referencess/
+          echo "break 4"
           export ENVIRONMENT="source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/"
-
+          echo "break 5"
           nosetests --with-doctest --with-coverage -v --cover-package=qp_ivar_trim
+          echo "break 6"
       - uses: codecov/codecov-action@v1
         with:
          token: ${{ secrets.CODECOV_TOKEN }}
