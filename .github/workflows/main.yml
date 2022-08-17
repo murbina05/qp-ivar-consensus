@@ -82,9 +82,8 @@ jobs:
 
           export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/references/
 
-          echo "break 1a"
+
           configure_qp_ivar_trim --env-script "source ~/.bash_profile; conda activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/; export ENVIRONMENT='source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/'" --server-cert $QIITA_SERVER_CERT
-          echo break 1b""
           echo "Available Qiita plugins"
           ls ~/.qiita_plugins/
       - name: Starting Main Services
@@ -95,7 +94,7 @@ jobs:
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
           sed "s#/home/runner/work/qiita/qiita#${PWD}/qiita-dev/#g" `pwd`/qiita-dev/qiita_core/support_files/config_test.cfg > ${QIITA_CONFIG_FP}
           export REDBIOM_HOST="http://localhost:7379"
-          
+
           echo "1. Setting up redis"
           redis-server --daemonize yes --port 7777
 
@@ -107,9 +106,11 @@ jobs:
           nginx -c ${NGINX_FILE_NEW}
 
           echo "3. Setting up qiita"
+          echo qiita --help
           qiita-env make --no-load-ontologies
           qiita plugins update
           qiita-test-install
+
           echo "4. Starting supervisord => multiple qiita instances"
           supervisord -c ${PWD}/qiita-dev/qiita_pet/supervisor_example.conf
           sleep 10
