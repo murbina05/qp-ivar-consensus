@@ -52,8 +52,8 @@ class IvarTrimTests(PluginTestCase):
         params = {'nprocs': 2,
                   'out_dir': '/foo/bar/output'}
         # need to change these to bam
-        BAM_file = ['CALM_SEP_001970_03_S265_L001.sorted.bam',
-                    'CALM_SEP_001970_03_S265_L002.sorted.bam']
+        BAM_file = ['untrimmed1.sorted.bam',
+                    'untrimmed2.sorted.bam']
         obs = _generate_commands(BAM_file, params['nprocs'],
                                  params['out_dir'])
         cmd = IVAR_TRIM_CMD.format(**params)
@@ -195,7 +195,8 @@ def test_ivar_trim(self):
         self.assertEqual(finish_qsub, exp_finish_qsub)
 
         exp_out_files = [
-            f'{out_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam\tbam\n']
+            f'{out_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam\tbam\n',
+            f'{out_dir}/CALM_SEP_001970_03_S265_L002.sorted.bam\tbam\n']
         self.assertEqual(out_files, exp_out_files)
 
         # the easiest to figure out the
