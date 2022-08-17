@@ -155,9 +155,10 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
     """
     database = None
     if params['primer'] != 'None':
+        list = get_dbs_list
         database = [join(QC_REFERENCES, f'{db}')
-                    for db in get_dbs_list()
-                    if params['primer'] in db][0]
+                    for db in list
+                    if params['reference'] in db][0]
 
     bam_reads = sorted(files['untrimmed_sorted_bam'])
 #    if 'raw_reverse_seqs' in files:
