@@ -90,7 +90,7 @@ jobs:
           if [[ $ivar_version != *"1.3.1"* ]]; then echo "wrong ivar version", $ivar_version; exit 1; fi
 
 
-          configure_qp_ivar_trim --env-script "source ~/.bash_profile; conda activate qp-ivar-trim; export QC_REFERENCES=${PWD}/qp_ivar_trim/support_files/references/; export ENVIRONMENT='source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCES=${PWD}/qp_ivar_trim/support_files/references/'" --server-cert $QIITA_SERVER_CERT
+          configure_qp_ivar_trim --env-script "source ~/.bash_profile; conda activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/; export ENVIRONMENT='source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/'" --server-cert $QIITA_SERVER_CERT
 
           echo "Available Qiita plugins"
           ls ~/.qiita_plugins/
