@@ -95,22 +95,21 @@ jobs:
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
           sed "s#/home/runner/work/qiita/qiita#${PWD}/qiita-dev/#g" `pwd`/qiita-dev/qiita_core/support_files/config_test.cfg > ${QIITA_CONFIG_FP}
           export REDBIOM_HOST="http://localhost:7379"
+          
           echo "1. Setting up redis"
           redis-server --daemonize yes --port 7777
+
           echo "2. Setting up nginx"
           mkdir -p ${CONDA_PREFIX}/var/run/nginx/
           export NGINX_FILE=`pwd`/qiita-dev/qiita_pet/nginx_example.conf
           export NGINX_FILE_NEW=`pwd`/qiita-dev/qiita_pet/nginx_example_local.conf
           sed "s#/home/runner/work/qiita/qiita#${PWD}/qiita-dev/#g" ${NGINX_FILE} > ${NGINX_FILE_NEW}
           nginx -c ${NGINX_FILE_NEW}
+
           echo "3. Setting up qiita"
-          echo "break 2a"
           qiita-env make --no-load-ontologies
-          echo "break 2b"
           qiita plugins update
-          echo "break 2c"
           qiita-test-install
-          echo "break 2d"
           echo "4. Starting supervisord => multiple qiita instances"
           supervisord -c ${PWD}/qiita-dev/qiita_pet/supervisor_example.conf
           sleep 10
