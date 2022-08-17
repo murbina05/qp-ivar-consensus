@@ -51,11 +51,14 @@ jobs:
           # all config files
           wget https://github.com/biocore/qiita/archive/dev.zip
           unzip dev.zip
+
           # pull out the port so we can modify the configuration file easily
           pgport=${{ job.services.postgres.ports[5432] }}
           sed -i "s/PORT = 5432/PORT = $pgport/" qiita-dev/qiita_core/support_files/config_test.cfg
+
           # PGPASSWORD is read by pg_restore, which is called by the build_db process.
           export PGPASSWORD=postgres
+
           # Setting up main qiita conda environment
           conda config --add channels conda-forge
           conda create -q --yes -n qiita python=3.9 libgfortran numpy nginx cython redis
@@ -65,7 +68,7 @@ jobs:
         shell: bash -l {0}
         run: |
           conda activate qiita
-          pip install . --no-binary redbiom --ignore-installed
+          pip install qiita-dev/ --no-binary redbiom --ignore-installed
           mkdir ~/.qiita_plugins
       - name: Install Qiita plugins
         shell: bash -l {0}
@@ -82,10 +85,11 @@ jobs:
 
           export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/references/
 
-          ivar_version=`ivar --version`
+          ivar_version=`ivar version`
+          cat | ivar version
           if [[ $ivar_version != *"1.3.1"* ]]; then echo "wrong ivar version", $ivar_version; exit 1; fi
 
-          configure_qp_ivar_trim --env-script "source /home/runner/.profile; conda activate qp-ivar-trim" --server-cert $QIITA_SERVER_CERT
+          configure_qp_ivar_trim --env-script "source ~/.bash_profile; conda activate qp-ivar-trim" --server-cert $QIITA_SERVER_CERT
 
           echo "Available Qiita plugins"
           ls ~/.qiita_plugins/
@@ -128,6 +132,7 @@ jobs:
           export QIITA_CONFIG_FP=`pwd`/qiita-dev/qiita_core/support_files/config_test_local.cfg
           export QC_REFERENCE=$PWD/qp_ivar_trim/support_files/referencess/
           export ENVIRONMENT="source ~/.bash_profile; source activate qp-ivar-trim; export QC_REFERENCE=${PWD}/qp_ivar_trim/support_files/references/"
+
           nosetests --with-doctest --with-coverage -v --cover-package=qp_ivar_trim
       - uses: codecov/codecov-action@v1
         with:
