@@ -22,7 +22,7 @@ plugin = QiitaPlugin(**plugin_details)
 
 # Define the command
 dbs = get_dbs_list()
-sys.stdout.write(dbs[0])
+sys.stdout.write(dbs)
 dbs_without_extension = [splitext(db)[0] for db in dbs]
 sys.stdout.write(str(dbs))
 dbs_defaults = ', '.join([f'"{x}"' for x in dbs_without_extension])
