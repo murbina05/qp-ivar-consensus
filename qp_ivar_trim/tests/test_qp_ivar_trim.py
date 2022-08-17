@@ -49,18 +49,18 @@ class IvarTrimTests(PluginTestCase):
         # might need to change this
 
     def test_generate_commands(self):
-        params = {'database': 'artifacts', 'nprocs': 2,
+        params = {'nprocs': 2,
                   'out_dir': '/foo/bar/output'}
         # need to change these to bam
         BAM_file = ['CALM_SEP_001970_03_S265_L001.sorted.bam',
                     'CALM_SEP_001970_03_S265_L002.sorted.bam']
-        obs = _generate_commands(BAM_file, params['database'],
-                                 params['nprocs'], params['out_dir'])
+        obs = _generate_commands(BAM_file, params['nprocs'],
+                                 params['out_dir'])
         cmd = IVAR_TRIM_CMD.format(**params)
         ecmds = [cmd % (bam, bam)
-                 for bam in zip_longest(BAM_file)]
-        eof = [(f'{params["out_dir"]}/{f}', 'bam')
-               for bam in sorted(BAM_file)]
+                 for bam in BAM_file]
+        eof = [(f'{params["out_dir"]}/{bam}', 'bam')
+               for bam in BAM_file]
         # for f in sorted(rev_seqs):
         #    eof.append((f'{params["out_dir"]}/{f}',
         #  'raw_reverse_seqs'))
