@@ -36,3 +36,4 @@ def client_connect(url):
                           server_cert=config.get('oauth2', 'SERVER_CERT'))
 
     return qclient
+    

@@ -243,3 +243,4 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
         out.write('\n'.join([f'{fp}\t{ft}'for fp, ft in out_files]))
 
     return main_qsub_fp, finish_qsub_fp, out_files_fp
+    

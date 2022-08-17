@@ -27,3 +27,4 @@ def config(env_script, server_cert):
 
 if __name__ == '__main__':
     config()
+    
