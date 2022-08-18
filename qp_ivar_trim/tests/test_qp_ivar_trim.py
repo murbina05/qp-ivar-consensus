@@ -59,11 +59,8 @@ class IvarTrimTests(PluginTestCase):
         cmd = IVAR_TRIM_CMD.format(**params)
         ecmds = [cmd % (bam, bam)
                  for bam in BAM_file]
-        eof = [(f'{params["out_dir"]}/{bam}', 'bam')
+        eof = [(f'{params["out_dir"]}/{bam}', 'trimmed')
                for bam in BAM_file]
-        # for f in sorted(rev_seqs):
-        #    eof.append((f'{params["out_dir"]}/{f}',
-        #  'raw_reverse_seqs'))
         self.assertCountEqual(obs[0], ecmds)
         self.assertCountEqual(obs[1], eof)
 
