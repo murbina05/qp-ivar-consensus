@@ -65,7 +65,7 @@ class IvarTrimTests(PluginTestCase):
         self.assertCountEqual(obs[1], eof)
 
 
-def test_ivar_trim(self):
+    def test_ivar_trim(self):
         # inserting new prep template
         prep_info_dict = {
             'SKB8.640193': {'run_prefix': 'CALM_SEP'}}
