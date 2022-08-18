@@ -7,7 +7,7 @@ qp-ivar-trim Qiita Plugin
 is an analysis environment for microbiome (and other "comparative -omics")
 datasets.
 
-This package includes the qp-fastp Qiita plugin.
+This package includes the qp-ivar-trim Qiita plugin.
 
 How to test this package?
 -------------------------
