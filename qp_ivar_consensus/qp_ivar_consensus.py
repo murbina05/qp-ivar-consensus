@@ -22,13 +22,13 @@ FINISH_MEMORY = '10g'
 FINISH_WALLTIME = '10:00:00'
 MAX_RUNNING = 8
 #  -i    (Required) Sorted bam file,
-# with aligned reads, to trim primers and quality
+# with aligned reads, to consensus primers and quality
 
 #  -b    (Required) BED file with
 # primer sequences and positions
 
 #  -m    Minimum length of read to
-#  retain after trimming (Default: 30)
+#  retain after consensusming (Default: 30)
 
 #  -q    Minimum quality threshold
 #  for sliding window to pass (Default: 20)
@@ -39,9 +39,9 @@ MAX_RUNNING = 8
 # By default, reads with no primers are excluded
 
 QC_REFERENCE = environ["QC_REFERENCE"]
-IVAR_TRIM_BASE = 'ivar trim -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
+IVAR_consensus_BASE = 'ivar consensus -x 5 -e -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
 
-IVAR_TRIM_CMD = ' '.join([IVAR_TRIM_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
+IVAR_consensus_CMD = ' '.join([IVAR_consensus_BASE, ' -o {out_dir}/%s -O {out_dir}/%s'])
 
 # i dont think i need this part
 
@@ -61,7 +61,7 @@ def _generate_commands(BAM_file, prefix, out_dir,
                        min_length, min_quality, slideing_window_width):
     """Helper function to generate commands and facilite testing"""
     files = BAM_file
-    cmd = IVAR_TRIM_CMD
+    cmd = IVAR_consensus_CMD
 #        if database is not None:
 #            cmd = COMBINED_CMD
 #    else:
@@ -78,7 +78,7 @@ def _generate_commands(BAM_file, prefix, out_dir,
     for BAM_file in files:
         fname = basename(BAM_file)
         out_files.append((f'{out_dir}/{fname}',
-                         'trimmed'))  # might be trimmed
+                         'consensusmed'))  # might be consensusmed
 #        if rev_fp:
 #            rname = basename(rev_fp)
 #            out_files.append((f'{out_dir}/{rname}',
@@ -91,8 +91,8 @@ def _generate_commands(BAM_file, prefix, out_dir,
     return commands, out_files
 
 
-def ivar_trim(qclient, job_id, parameters, out_dir):
-    """Run ivar trim with the given parameters
+def ivar_consensus(qclient, job_id, parameters, out_dir):
+    """Run ivar consensus with the given parameters
 
     Parameters
     ----------
@@ -112,7 +112,7 @@ def ivar_trim(qclient, job_id, parameters, out_dir):
     """
 
     qclient.update_job_step(
-        job_id, "Step 3 of 4: Finishing Ivar Trim")
+        job_id, "Step 3 of 4: Finishing Ivar consensus")
 
     ainfo = []
     # Generates 2 artifacts: one for the ribosomal
@@ -126,13 +126,13 @@ def ivar_trim(qclient, job_id, parameters, out_dir):
     # Step 4 generating artifacts
     msg = "Step 4 of 4: Generating new artifact"
     qclient.update_job_step(job_id, msg)
-    ainfo = [ArtifactInfo('trimmed files', 'per_sample_FASTQ', out_files)]
+    ainfo = [ArtifactInfo('consensusmed files', 'per_sample_FASTQ', out_files)]
 #   ^^^^ looks like the  part might need to change ^^^^
 #       might need to change to fastq for multisample pipeline
     return True, ainfo, ""
 
 
-def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
+def ivar_consensus_to_array(files, out_dir, params, prep_info, url, job_id):
     """Creates qsub files for submission of bam
 
     Parameters
@@ -142,7 +142,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
     out_dir : str
         The output directory
     params : dict
-        The parameter values to run Ivar Trim
+        The parameter values to run Ivar consensus
     prep_info : str
         The path to prep_info
     url : str
@@ -161,7 +161,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
                     for db in get_dbs_list()
                     if params['primer'] in db][0]
 
-    bam_reads = sorted(files['untrimmed_sorted_bam'])
+    bam_reads = sorted(files['unconsensusmed_sorted_bam'])
 #    if 'raw_reverse_seqs' in files:
 #        rev_seqs = sorted(files['raw_reverse_seqs'])
 #    else:
@@ -179,7 +179,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
         bam_reads, database, params['threads'], out_dir)
 
     # writing the job array details
-    details_name = join(out_dir, 'ivar_trim.array-details')
+    details_name = join(out_dir, 'ivar_consensus.array-details')
     with open(details_name, 'w') as details:
         details.write('\n'.join(commands))
     n_jobs = len(commands)
@@ -229,7 +229,7 @@ def ivar_trim_to_array(files, out_dir, params, prep_info, url, job_id):
              'date',  # start time
              'hostname',  # executing system
              'echo $PBS_JOBID',
-             f'finish_qp_ivar_trim {url} {job_id} {out_dir}\n'
+             f'finish_qp_ivar_consensus {url} {job_id} {out_dir}\n'
              "date"]
     finish_qsub_fp = join(out_dir, f'{job_id}.finish.qsub')
     with open(finish_qsub_fp, 'w') as out:

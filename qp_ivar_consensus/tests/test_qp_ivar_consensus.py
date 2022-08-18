@@ -15,14 +15,14 @@ from json import dumps
 from itertools import zip_longest
 from functools import partial
 
-from qp_ivar_trim import plugin
-from qp_ivar_trim.utils import plugin_details
-from qp_ivar_trim.qp_ivar_trim import (
+from qp_ivar_consensus import plugin
+from qp_ivar_consensus.utils import plugin_details
+from qp_ivar_consensus.qp_ivar_consensus import (
                                         get_dbs_list, _generate_commands,
-                                        ivar_trim_to_array, QC_REFERENCE, IVAR_TRIM_CMD)
+                                        ivar_consensus_to_array, QC_REFERENCE, IVAR_consensus_CMD)
 
 
-class IvarTrimTests(PluginTestCase):
+class IvarconsensusTests(PluginTestCase):
     def setUp(self):
         plugin("https://localhost:21174", 'register', 'ignored')
 
@@ -52,20 +52,20 @@ class IvarTrimTests(PluginTestCase):
         params = {'nprocs': 2,
                   'out_dir': '/foo/bar/output'}
         # need to change these to bam
-        BAM_file = ['untrimmed1.sorted.bam',
-                    'untrimmed2.sorted.bam']
+        BAM_file = ['unconsensusmed1.sorted.bam',
+                    'unconsensusmed2.sorted.bam']
         obs = _generate_commands(BAM_file, params['nprocs'],
                                  params['out_dir'])
-        cmd = IVAR_TRIM_CMD.format(**params)
+        cmd = IVAR_consensus_CMD.format(**params)
         ecmds = [cmd % (bam, bam)
                  for bam in BAM_file]
-        eof = [(f'{params["out_dir"]}/{bam}', 'trimmed')
+        eof = [(f'{params["out_dir"]}/{bam}', 'consensusmed')
                for bam in BAM_file]
         self.assertCountEqual(obs[0], ecmds)
         self.assertCountEqual(obs[1], eof)
 
 
-    def test_ivar_trim(self):
+    def test_ivar_consensus(self):
         # inserting new prep template
         prep_info_dict = {
             'SKB8.640193': {'run_prefix': 'CALM_SEP'}}
@@ -83,7 +83,7 @@ class IvarTrimTests(PluginTestCase):
         fp1_2 = join(in_dir, 'CALM_SEP_001970_03_S265_L002.sorted.bam')
         # fp2_1 = join(in_dir, 'S22282_S102_L001_R1_001.fastq.gz')
         # fp2_2 = join(in_dir, 'S22282_S102_L001_R2_001.fastq.gz')
-        source_dir = 'qp_ivar_trim/support_files/raw_data'
+        source_dir = 'qp_ivar_consensus/support_files/raw_data'
         copyfile(f'{source_dir}/CALM_SEP_001970_03_S265_L001.sorted.bam',
                  fp1_1)
         copyfile(f'{source_dir}/CALM_SEP_001970_03_S265_L002.sorted.bam',
@@ -105,7 +105,7 @@ class IvarTrimTests(PluginTestCase):
         data = {'user': 'demo@microbio.me',
                 'command': dumps([plugin_details['name'],
                                   plugin_details['version'],
-                                  'Trimming']),
+                                  'consensusming']),
                 'status': 'running',
                 'parameters': dumps(self.params)}
         job_id = self.qclient.post(
@@ -126,7 +126,7 @@ class IvarTrimTests(PluginTestCase):
 
         url = 'this-is-my-url'
 
-        main_qsub_fp, finish_qsub_fp, out_files_fp = ivar_trim_to_array(
+        main_qsub_fp, finish_qsub_fp, out_files_fp = ivar_consensus_to_array(
             artifact_info['files'], out_dir, self.params, prep_file,
             url, job_id)
 
@@ -141,7 +141,7 @@ class IvarTrimTests(PluginTestCase):
             finish_qsub = f.readlines()
         with open(out_files_fp) as f:
             out_files = f.readlines()
-        with open(f'{out_dir}/ivar_trim.array-details') as f:
+        with open(f'{out_dir}/ivar_consensus.array-details') as f:
             commands = f.readlines()
 
         exp_main_qsub = [
@@ -157,13 +157,13 @@ class IvarTrimTests(PluginTestCase):
             '#PBS -l epilogue=/home/qiita/qiita-epilogue.sh\n',
             'set -e\n',
             f'cd {out_dir}\n',
-            'source ~/.bash_profile; source activate qp-ivar-trim; '
+            'source ~/.bash_profile; source activate qp-ivar-consensus; '
             f'export QC_REFERENCE={QC_REFERENCE}\n',
             'date\n',
             'hostname\n',
             'echo ${PBS_JOBID} ${PBS_ARRAYID}\n',
             'offset=${PBS_ARRAYID}\n', 'step=$(( $offset - 0 ))\n',
-            f'cmd=$(head -n $step {out_dir}/ivar_trim.array-details | '
+            f'cmd=$(head -n $step {out_dir}/ivar_consensus.array-details | '
             'tail -n 1)\n',
             'eval $cmd\n',
             'set +e\n',
@@ -182,12 +182,12 @@ class IvarTrimTests(PluginTestCase):
             '#PBS -l epilogue=/home/qiita/qiita-epilogue.sh\n',
             'set -e\n',
             f'cd {out_dir}\n',
-            'source ~/.bash_profile; source activate qp-ivar-trim; '
+            'source ~/.bash_profile; source activate qp-ivar-consensus; '
             f'export QC_REFERENCE={QC_REFERENCE}\n',
             'date\n',
             'hostname\n',
             'echo $PBS_JOBID\n',
-            f'finish_qp_ivar_trim this-is-my-url {job_id} {out_dir}\n',
+            f'finish_qp_ivar_consensus this-is-my-url {job_id} {out_dir}\n',
             'date\n']
         self.assertEqual(finish_qsub, exp_finish_qsub)
 
@@ -199,13 +199,13 @@ class IvarTrimTests(PluginTestCase):
         # the easiest to figure out the
         # location of the artifact input files
         # is to check the first file of the raw forward reads
-        # VAR_TRIM_BASE = 'ivar trim -x 5 -e
+        # VAR_consensus_BASE = 'ivar consensus -x 5 -e
         # -i %s -b %s -p %s [-m %s] [-q %s] [-s %s]'
         # apath = dirname(artifact_info['files']['bam'][0])
-        exp_commands = ['ivar trim -x 5 -e',
+        exp_commands = ['ivar consensus -x 5 -e',
                         '-i CALM_SEP_001970_03_S265_L001.sorted.bam',
                         '-b {QC_REFERENCE}',
-                        '-p CALM_SEP_001970_03_S265_L001.sorted.trimmed',
+                        '-p CALM_SEP_001970_03_S265_L001.sorted.consensusmed',
                         '-m 100 -q 15 -s 4  ']
         #   f'-I {apath}/S22205_S104_L001_R2_0
         #   01.fastq.gz --stdout | '

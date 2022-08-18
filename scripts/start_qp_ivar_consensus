@@ -12,9 +12,9 @@ import click
 from subprocess import run, PIPE
 from os import environ
 
-from qp_ivar_trim import plugin
-from qp_ivar_trim.qp_ivar_trim import ivar_trim_to_array
-from qp_ivar_trim.utils import client_connect
+from qp_ivar_consensus import plugin
+from qp_ivar_consensus.qp_ivar_consensus import ivar_consensus_to_array
+from qp_ivar_consensus.utils import client_connect
 
 
 @click.command()
@@ -44,7 +44,7 @@ def execute(url, job_id, out_dir):
                                 % artifact_info['prep_information'][0])
         prep_file = prep_info['prep-file']
 
-        main_qsub_fp, finish_qsub_fp, out_files_fp = ivar_trim_to_array(
+        main_qsub_fp, finish_qsub_fp, out_files_fp = ivar_consensus_to_array(
             artifact_info['files'], out_dir, parameters, prep_file,
             url, job_id)
 
@@ -57,7 +57,7 @@ def execute(url, job_id, out_dir):
         print(f'{main_job_id}, {finish_job_id}')
 
         qclient.update_job_step(
-            job_id, "Step 2 of 4: Running ivar trim")
+            job_id, "Step 2 of 4: Running ivar consensus")
 
 
 if __name__ == '__main__':

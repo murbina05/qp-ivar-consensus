@@ -15,9 +15,9 @@ from configparser import ConfigParser
 from qiita_client import QiitaClient
 
 
-plugin_details = {'name': 'qp-ivar-trim',
+plugin_details = {'name': 'qp-ivar-consensus',
                   'version': '2022.04',
-                  'description': 'ivar trimmming of bam files'}
+                  'description': 'ivar consensusmming of bam files'}
 
 
 def client_connect(url):
