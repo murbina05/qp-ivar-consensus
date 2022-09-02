@@ -8,7 +8,7 @@
 # from operator import length_hint
 # from sys import stdlib_module_names
 import pandas as pd
-
+import gzip
 from os import environ
 from os.path import basename, join
 from glob import glob
